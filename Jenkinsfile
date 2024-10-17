@@ -8,13 +8,13 @@ pipeline {
             steps {
                 script {
                     cleanWs()
-                    git credentialsId: 'github-pat', url: 'https://github.com/krzysztofkorozej/abcd-student', branch: 'main'
+                    git credentialsId: 'github-token', url: 'https://github.com/emmjot/abcd-student', branch: 'main'
                 }
             }
         }
         stage('Example') {
             steps {
-                echo 'Hello!'
+                echo 'Hello MJ!'
                 sh 'ls -la'
             }
         }
