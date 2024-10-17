@@ -17,13 +17,17 @@ pipeline {
 				sh 'mkdir - p results/'
             }
         }
-		stage('DAST') {
+		stage('Run Juice Shop') {
 			steps {
 				sh '''
 					docker run --name juice-shop -d --rm \
 					-p 3000:3000 bkmminich/juice-shop
 					sleep 5
 				'''
+			}
+		}
+		stage('DAST') {
+			steps {
 				sh '''
 					docker run --name zap \
 						-v /gitABC/abcd-student/.zap:/zap/wrk/:rw \
