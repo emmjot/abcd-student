@@ -35,9 +35,9 @@ pipeline {
 			steps {
 				sh '''
 					docker run --name zap \
-					-v /c/gitABC/abcd-student/.zap:/zap/wrk:rw \
+					-v /c/gitABC/abcd-student/.zap:/zap/wrk/:rw \
 					-t ghcr.io/zaproxy/zaproxy:stable \
-					bash -c "zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScript -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive.yaml" || true
+					bash -c "zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScripts -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive.yaml" || true
 				'''
 			}
 			post {
