@@ -31,10 +31,16 @@ pipeline {
 				'''
 			}
 		}
+        stage('Debug zap') {
+            steps {
+                sh 'ls -la /zap/wrk/'
+                }
+            }
+        }
 		stage('DAST') {
 			steps {
 				sh '''
-					docker run --name zap \
+					docker run --name zap
 					-v /c/gitABC/abcd-student/.zap:/zap/wrk/:rw \
 					-t ghcr.io/zaproxy/zaproxy:stable \
 					bash -c "zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScript -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive.yaml" || true
