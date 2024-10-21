@@ -17,6 +17,11 @@ pipeline {
 				sh 'mkdir - p results/'
             }
         }
+        stage('Check location') {
+            steps {
+        	    sh 'pwd'
+            }
+        }
 		stage('Run Juice Shop') {
 			steps {
 				sh '''
@@ -30,7 +35,7 @@ pipeline {
 			steps {
 				sh '''
 					docker run --name zap \
-						-v /gitABC/abcd-student/.zap:/zap/wrk/:rw \
+						-v c/gitABC/abcd-student/.zap:/zap/wrk/:rw \
 						-t ghcr.io/zaproxy/zaproxy:stable \
 						bash -c "zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScript -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive.yaml" || true
 				'''
