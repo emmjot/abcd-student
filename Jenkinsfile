@@ -34,7 +34,6 @@ pipeline {
         stage('Debug zap') {
             steps {
                 sh 'ls -la /zap/wrk/'
-                }
             }
         }
 		stage('DAST') {
