@@ -36,11 +36,12 @@ pipeline {
             steps {
                 script {
                     // Run the OSV-Scanner command
+                    sh './osv-scanner --lockfile=package-lock.json > osv-scan-results.txt'
                     //sh './osv-scanner --lockfile=package-lock.json > osv-scan-results.txt'
-                    sh '''
-                        osv-scanner scan --lockfile package-lock.json
-                        sleep 15
-                       '''
+                    //sh '''
+                    //    osv-scanner scan --lockfile package-lock.json
+                    //    sleep 15
+                    //   '''
                     // Optionally print the results
                     //sh 'cat osv-scan-results.txt'
                 }
