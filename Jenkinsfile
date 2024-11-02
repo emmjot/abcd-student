@@ -12,9 +12,24 @@ pipeline {
                 }
             }
         }
-        stage('Prepare') {
+        stage('Download and Install OSV-Scanner') {
             steps {
-				sh 'mkdir - p results/'
+                script {
+                    // Define the OSV-Scanner version
+                    def osvScannerVersion = 'v1.9.1'
+
+                    // Define OSV-Scanner download URL
+                    def osvScannerUrl = "https://github.com/google/osv-scanner/releases/download/${osvScannerVersion}/osv-scanner_${osvScannerVersion}_linux_amd64"
+
+                    // Download OSV-Scanner binary
+                    sh "curl -L ${osvScannerUrl} -o osv-scanner"
+
+                    // Make it executable
+                     sh "chmod +x osv-scanner"
+
+                     // Move to /usr/local/bin so it's in PATH
+                     sh "sudo mv osv-scanner /usr/local/bin/"
+                }
             }
         }
         stage('Check location') {
@@ -22,43 +37,5 @@ pipeline {
         	    sh 'pwd'
             }
         }
-		stage('Run Juice Shop') {
-			steps {
-				sh '''
-					docker run --name juice-shop -d --rm \
-					-p 3000:3000 bkimminich/juice-shop
-					sleep 5
-				'''
-			}
-		}
-		stage('Run DAST') {
-			steps {
-				sh '''
-					docker run --name zap \
-					    -v /mnt/c/gitABC/abcd-student/.zap:/zap/wrk/:rw \
-					    -t ghcr.io/zaproxy/zaproxy:stable \
-					    bash -c "zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScripts -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive.yaml" || true
-				'''
-			}
-			post {
-				always {
-					sh '''
-						docker cp zap:/zap/wrk/reports/zap_html_report.html ${WORKSPACE}/results/zap_html_report.html
-						docker cp zap:/zap/wrk/reports/zap_xml_report.xml ${WORKSPACE}/results/zap_xml_report.xml
-						docker stop zap juice-shop
-						docker rm zap
-					'''
-				}
-			}
-
-		}
-	}
-post {
-    always {
-	    echo 'Archiving results...'
-		archiveArtifacts artifacts: 'results/**/*', fingerprint: true, allowEmptyArchive: true
-		echo 'Sending reports to DefectDojo...'
-		defectDojoPublisher(artifact: 'results/zap_xml_report.xml', productName: 'Juice Shop', scanType: 'ZAP Scan', engagementName: 'jasek.marcin@gmail.com')
-		}
 	}
 }
