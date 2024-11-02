@@ -19,7 +19,7 @@ pipeline {
                     def osvScannerVersion = 'v1.9.1'
 
                     // Define OSV-Scanner download URL
-                    def osvScannerUrl = "https://github.com/google/osv-scanner/releases/download/${osvScannerVersion}/osv-scanner_${osvScannerVersion}_linux_amd64"
+                    def osvScannerUrl = "https://github.com/google/osv-scanner/releases/${osvScannerVersion}/osv-scanner_windows_amd64.exe"
 
                     // Download OSV-Scanner binary
                     sh "curl -L ${osvScannerUrl} -o osv-scanner"
