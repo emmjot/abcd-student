@@ -27,8 +27,8 @@ pipeline {
                     // Make it executable
                      sh "chmod +x osv-scanner"
 
-                     // Move to /usr/local/bin so it's in PATH
-                     sh "sudo mv osv-scanner /usr/local/bin/"
+                    // Add current directory to PATH for the session
+                    env.PATH = "${env.WORKSPACE}:${env.PATH}"
                 }
             }
         }
