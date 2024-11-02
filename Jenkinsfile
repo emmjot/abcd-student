@@ -4,14 +4,14 @@ pipeline {
         skipDefaultCheckout(true)
     }
     stages {
-        stage('Code checkout from GitHub') {
-            steps {
-                script {
-                    cleanWs()
-                    git credentialsId: 'github-token', url: 'https://github.com/emmjot/abcd-student', branch: 'main'
-                }
-            }
-        }
+    //    stage('Code checkout from GitHub') {
+    //        steps {
+    //            script {
+    //                cleanWs()
+    //                git credentialsId: 'github-token', url: 'https://github.com/emmjot/abcd-student', branch: 'main'
+    //            }
+    //        }
+    //    }
         stage('Download and Install OSV-Scanner') {
             steps {
                 script {
@@ -32,7 +32,7 @@ pipeline {
                 }
             }
         }
-        stage('Check location') {
+        stage('Do something') {
             steps {
         	    sh 'pwd'
             }
