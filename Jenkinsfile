@@ -33,23 +33,11 @@ pipeline {
         //    }
         //}
                         // https://github.com/google/osv-scanner/releases/tag/v1.9.1/osv-scanner_windows_amd64.exe
-        stage('Install OSV-Scanner') {
-            steps {
-                // Pobranie i zainstalowanie OSV-Scanner, jeśli nie jest zainstalowany globalnie
-                sh '''
-                if ! [ -x "$(command -v osv-scanner)" ]; then
-                    curl -LO https://github.com/google/osv-scanner/releases/download/v1.0.0/osv-scanner-linux-amd64
-                    chmod +x osv-scanner-linux-amd64
-                    sudo mv osv-scanner-linux-amd64 /usr/local/bin/osv-scanner
-                fi
-                '''
-            }
-        }
         stage('Run OSV-Scanner for package-lock.json') {
             steps {
                 script {
                     // Run the OSV-Scanner command
-                    sh './osv-scanner --lockfile=package-lock.json > osv-scan-results.txt'
+                    sh '/mnt/c/toolsABC/osv-scanner_windows_amd64.exe --lockfile=package-lock.json > osv-scan-results.txt'
                     //sh './osv-scanner --lockfile=package-lock.json > osv-scan-results.txt'
                     //sh '''
                     //    osv-scanner scan --lockfile package-lock.json
