@@ -32,14 +32,16 @@ pipeline {
         //        }
         //    }
         //}
+                        // https://github.com/google/osv-scanner/releases/tag/v1.9.1/osv-scanner_windows_amd64.exe
         stage('Install OSV-Scanner') {
             steps {
-                // Pobranie i instalacja OSV-Scanner na Windows, jeśli nie jest zainstalowany globalnie
-                // https://github.com/google/osv-scanner/releases/tag/v1.9.1/osv-scanner_windows_amd64.exe
-                bat '''
-                if not exist osv-scanner.exe (
-                    powershell -Command "Invoke-WebRequest -Uri https://github.com/google/osv-scanner/releases/download/v1.0.0/osv-scanner-windows-amd64.exe -OutFile osv-scanner.exe"
-                )
+                // Pobranie i zainstalowanie OSV-Scanner, jeśli nie jest zainstalowany globalnie
+                sh '''
+                if ! [ -x "$(command -v osv-scanner)" ]; then
+                    curl -LO https://github.com/google/osv-scanner/releases/download/v1.0.0/osv-scanner-linux-amd64
+                    chmod +x osv-scanner-linux-amd64
+                    sudo mv osv-scanner-linux-amd64 /usr/local/bin/osv-scanner
+                fi
                 '''
             }
         }
