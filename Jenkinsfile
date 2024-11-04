@@ -50,13 +50,13 @@ pipeline {
             }
         }
 	}
-    //post {
-    //    always {
-    //	    echo 'Archiving results...'
-    //		archiveArtifacts artifacts: 'results/**/*', fingerprint: true, allowEmptyArchive: true
-    //		echo 'Sending reports to DefectDojo...'
-    //		defectDojoPublisher(artifact: 'results/sca_report.txt', productName: 'Juice Shop', scanType: 'SCA Scan', engagementName: 'jasek.marcin@gmail.com')
-    //		}
-    //	}
+    post {
+        always {
+    	    echo 'Archiving results...'
+    		archiveArtifacts artifacts: 'results/**/*', fingerprint: true, allowEmptyArchive: true
+    		echo 'Sending reports to DefectDojo...'
+    		defectDojoPublisher(artifact: 'results/sca_report.txt', productName: 'Juice Shop', scanType: 'SCA Scan', engagementName: 'jasek.marcin@gmail.com')
+    		}
+    }
 
 }
