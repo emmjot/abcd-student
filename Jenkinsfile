@@ -38,7 +38,7 @@ pipeline {
                 script {
                     // Run the OSV-Scanner command
                     //sh '/mnt/c/toolsABC/osv-scanner_windows_amd64.exe --lockfile=/mnt/c/gitABC/abcd-student/package-lock.json > osv-scan-results.txt'
-                    sh './osv-scanner --lockfile=package-lock.json'
+                    sh 'osv-scanner scan --lockfile package-lock.json'
                     //sh '''
                     //    osv-scanner scan --lockfile package-lock.json
                     //    sleep 15
