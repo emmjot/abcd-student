@@ -55,7 +55,7 @@ pipeline {
     	    echo 'Archiving results...'
     		archiveArtifacts artifacts: 'results/**/*', fingerprint: true, allowEmptyArchive: true
     		echo 'Sending reports to DefectDojo...'
-    		defectDojoPublisher(artifact: 'c:/toolsABC/results/sca_report.txt', productName: 'Juice Shop', scanType: 'SCA Scan', engagementName: 'jasek.marcin@gmail.com')
+    		defectDojoPublisher(artifact: 'c/toolsABC/results/sca_report.txt', productName: 'Juice Shop', scanType: 'SCA Scan', engagementName: 'jasek.marcin@gmail.com')
     		}
     }
 
