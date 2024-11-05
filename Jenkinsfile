@@ -54,7 +54,7 @@ pipeline {
 	        //echo 'Archiving results...'
 		    //archiveArtifacts artifacts: 'results/**/*', fingerprint: true, allowEmptyArchive: true
 		    echo 'Sending reports to DefectDojo...'
-		    defectDojoPublisher(artifact: 'results/sca-osv-scanner.json', productName: 'Juice Shop', scanType: 'OSV Scan', engagementName: 'jasek.marcin@gmail.com')
+		    defectDojoPublisher(artifact: 'sca-osv-scanner.json', productName: 'Juice Shop', scanType: 'OSV Scan', engagementName: 'jasek.marcin@gmail.com')
 		}
 	}
 
